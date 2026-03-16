@@ -18,6 +18,7 @@ A Rust daemon that:
 - applies process suspension (`SIGSTOP`) when a threshold is exceeded
 - exports JSON snapshots to `/tmp/budgie-control-stats.json` for UI consumption
 - hosts a local in-browser control panel and API on `http://127.0.0.1:47831/`
+- supports Opera GX-style presets (`eco`, `balanced`, `beast`) plus custom sliders
 
 Example:
 
@@ -25,7 +26,12 @@ Example:
 cargo run --manifest-path tools/budgie-control-daemon/Cargo.toml -- \
   --cpu-limit 75 \
   --ram-limit-mib 768 \
-  --process-name budgie-browser
+  --process-name budgie-browser \
+  --preset balanced
+
+# disable per-cycle logging (for quieter runs)
+# note: this is a clap bool value, so use =false
+# --verbose=false
 
 # open in Budgie Browser / Firefox / Chromium
 xdg-open http://127.0.0.1:47831/
@@ -79,7 +85,14 @@ python3 scripts/budgie_app_bridge.py spotify
 ### Budgie Control API
 
 - `GET /status` returns current limits + sampled processes
-- `POST /limits` updates live limits with JSON body:
+- `POST /limits` updates live custom limits with JSON body:
+- `POST /preset` applies a GX preset (`eco`, `balanced`, `beast`) instantly:
+
+```json
+{
+  "preset": "balanced"
+}
+```
 
 ```json
 {
@@ -87,4 +100,20 @@ python3 scripts/budgie_app_bridge.py spotify
   "ram_limit_mib": 1536,
   "idle_cpu_threshold": 3.5
 }
+```
+
+
+## Automation
+
+From repository root you can now run everything using either Make or Just:
+
+```bash
+make budgie-check
+make budgie-build
+make budgie-run-control
+
+# or
+just budgie-check
+just budgie-build
+just budgie-run-control
 ```
