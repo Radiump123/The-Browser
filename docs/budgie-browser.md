@@ -17,6 +17,7 @@ A Rust daemon that:
 - samples process CPU and memory usage
 - applies process suspension (`SIGSTOP`) when a threshold is exceeded
 - exports JSON snapshots to `/tmp/budgie-control-stats.json` for UI consumption
+- hosts a local in-browser control panel and API on `http://127.0.0.1:47831/`
 
 Example:
 
@@ -25,6 +26,9 @@ cargo run --manifest-path tools/budgie-control-daemon/Cargo.toml -- \
   --cpu-limit 75 \
   --ram-limit-mib 768 \
   --process-name budgie-browser
+
+# open in Budgie Browser / Firefox / Chromium
+xdg-open http://127.0.0.1:47831/
 ```
 
 ### 2) Theme engine (`tools/budgie-theme-engine`)
@@ -70,3 +74,17 @@ python3 scripts/budgie_app_bridge.py spotify
 - Keep telemetry disabled by default.
 - Run sidebar app surfaces in isolated contexts/profiles.
 - Maintain GPL-compatible licensing for all added components.
+
+
+### Budgie Control API
+
+- `GET /status` returns current limits + sampled processes
+- `POST /limits` updates live limits with JSON body:
+
+```json
+{
+  "cpu_limit": 70,
+  "ram_limit_mib": 1536,
+  "idle_cpu_threshold": 3.5
+}
+```
