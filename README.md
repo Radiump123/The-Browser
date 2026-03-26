@@ -14,6 +14,8 @@
 
 Zen is a firefox-based browser with the aim of pushing your productivity to a new level!
 
+> **Budgie Browser migration in progress:** this fork is being rebranded from Zen Browser to Budgie Browser (Charlot Softwares), with Linux-first performance tooling under `tools/budgie-control-daemon` and `tools/budgie-theme-engine`.
+
 <div flex="true">
   <a href="https://zen-browser.app/download">
     Download

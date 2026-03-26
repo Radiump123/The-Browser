@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Budgie Browser
+GenericName=Web Browser
+Comment=Linux-first, customizable and lightweight browser by Charlot Softwares
+Exec=budgie-browser %u
+Terminal=false
+Type=Application
+Icon=org.charlot.budgiebrowser
+Categories=Network;WebBrowser;
+StartupNotify=true
+StartupWMClass=Budgie Browser
+MimeType=text/html;text/xml;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;
